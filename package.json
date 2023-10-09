@@ -1,0 +1,22 @@
+{
+  "name": "movies-frontend",
+  "version": "1.0.0",
+  "description": "This is a react movies project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hardrich/movies-frontend.git"
+  },
+  "keywords": [
+    "movies"
+  ],
+  "author": "Richard Principe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hardrich/movies-frontend/issues"
+  },
+  "homepage": "https://github.com/hardrich/movies-frontend#readme"
+}
