@@ -1,34 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+import { Movies } from './components/Movies';
+import { useMovies } from './hooks/useMovies';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { movies } = useMovies();
+  const [query, setQuery] = useState('');
+  const [errorQuery, setErrorQuery] = useState(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    //const data = Object.fromEntries(new window.FormData(event.target));
+    console.log(query);
+  };
+
+  const handleQueryChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  useEffect(() => {
+    setErrorQuery(null);
+    if (query.startsWith(' ')) {
+      setErrorQuery('Do not start with space');
+    }
+  }, [query]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='page'>
+      <header>
+        <h1>Search your movie</h1>
+        <form className='form' onSubmit={handleSubmit} >
+          <input value={query} onChange={handleQueryChange} name='query' placeholder='Star Wars, Spider Man, ...' />
+          <button type='submit'>Search</button>
+        </form>
+        {
+          errorQuery ? <p>{errorQuery}</p> : <></>
+        }
+      </header>
+      <main>
+        <Movies movies={movies} />
+      </main>
+    </div>
   )
 }
 
