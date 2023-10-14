@@ -28,12 +28,12 @@ function useSearch() {
 }
 
 function App() {
+  const [sort, setSort] = useState(false);
   const { query, setQuery, errorQuery } = useSearch();
-  const { movies, getMovies } = useMovies({ query });
+  const { movies, getMovies } = useMovies({ query, sort });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //const data = Object.fromEntries(new window.FormData(event.target));
     await getMovies()
   };
 
@@ -41,12 +41,17 @@ function App() {
     setQuery(event.target.value);
   };
 
+  const handleSort = () => {
+    setSort(!sort);
+  }
+
   return (
     <div className='page'>
       <header>
         <h1>Search your movie</h1>
         <form className='form' onSubmit={handleSubmit} >
           <input style={{ border: '1px solid transparent', borderColor: errorQuery ? 'red' : 'transparent' }} value={query} onChange={handleQueryChange} name='query' placeholder='Star Wars, Spider Man, ...' />
+          <input type='checkbox' onChange={handleSort} checked={sort} />
           <button type='submit'>Search</button>
         </form>
         {
